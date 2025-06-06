@@ -41,10 +41,10 @@ jobs:
           echo "$ANDROID_HOME"
           $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
 
-      # - name: Wait for boot
-      #   run: |
-      #     while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
-      #     echo adb devices
+      - name: Wait for boot
+        run: |
+          while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
+          adb devices
 
       # - name: AVD cache
       #   uses: actions/cache@v4
