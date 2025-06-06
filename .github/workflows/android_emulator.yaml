@@ -9,10 +9,10 @@ on:
 
 jobs:
   test:
-    runs-on: macOS-13
-    # strategy:
-    #   matrix:
-    #     api-level: [33]
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [34]
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -40,9 +40,9 @@ jobs:
 
       - name: Create AVD
         run: |
-          SYSTEM_IMAGES="system-images;android-27;google_apis;x86"
+          SYSTEM_IMAGES="system-images;android-${{ matrix.api-level }};default;arm64-v8a"
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "$SYSTEM_IMAGES"
-          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES" --force
+          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES"
 
       - name: Start android emulator
         # https://developer.android.com/studio/run/emulator-commandline
