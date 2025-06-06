@@ -1,0 +1,100 @@
+name: flutter android emulator
+# actで実行する場合は以下のcommandを実行すること
+# $ act push --container-architecture=linux/amd64 -W .github/workflows/flutter_analyzer.yaml
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [29]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: "temurin"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # - name: Gradle cache
+      #   uses: gradle/actions/setup-gradle@v3
+
+      - name: Create AVD
+        run: |
+          SYSTEM_IMAGES="system-images;android-29;default;x86"
+          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "$SYSTEM_IMAGES"
+          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES"
+
+      - name: Start android emulator
+        # https://developer.android.com/studio/run/emulator-commandline
+        run: |
+          echo "$ANDROID_HOME"
+          $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+
+      - name: Wait for boot
+        run: |
+          while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
+          echo adb devices
+
+      # - name: AVD cache
+      #   uses: actions/cache@v4
+      #   id: avd-cache
+      #   with:
+      #     path: |
+      #       ~/.android/avd/*
+      #       ~/.android/adb*
+      #     key: avd-${{ matrix.api-level }}
+
+      # - name: Restart adb server
+      #   run: |
+      #     adb kill-server
+      #     echo "Killed adb server"
+      #     adb start-server
+      #     echo "Started adb server"
+
+      # - name: Run connected tests
+      #   uses: ReactiveCircus/android-emulator-runner@v2
+      #   with:
+      #     api-level: ${{ matrix.api-level }}
+      #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+      #     arch: x86_64
+
+      # - name: create AVD and generate snapshot for caching
+      #   if: steps.avd-cache.outputs.cache-hit != 'true'
+      #   uses: reactivecircus/android-emulator-runner@v2
+      #   with:
+      #     api-level: ${{ matrix.api-level }}
+      #     force-avd-creation: false
+      #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+      #     disable-animations: false
+      #     script: |
+      #       echo "Generated AVD snapshot for caching."
+      #       abd devices
+
+      # - name: Read Flutter version and channel from .fvmrc
+      #   uses: kuhnroyal/flutter-fvm-config-action@v2
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: ${{ env.FLUTTER_VERSION }}
+      #     channel: ${{ env.FLUTTER_CHANNEL }}
+      #     cache: true
+      #     # actによる仮想環境での実行したい場合は以下の2行をアンコメントすること
+      #     # https://github.com/subosito/flutter-action/discussions/197#discussioncomment-6431235
+      #     architecture: x64
+      # - run: git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
+
+      # # # - run: flutter doctor -v
+      # - run: flutter --version
+
+      # - run: flutter pub get
+      # # - run: flutter devices
