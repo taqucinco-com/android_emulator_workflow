@@ -29,6 +29,15 @@ jobs:
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
 
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
       - name: Create AVD
         run: |
           SYSTEM_IMAGES="system-images;android-33;default;arm64-v8a"
@@ -43,17 +52,9 @@ jobs:
 
       - name: Wait for boot
         run: |
-          while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
-          adb devices
+          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          $ANDROID_HOME/platform-tools/adb devices
 
-      # - name: AVD cache
-      #   uses: actions/cache@v4
-      #   id: avd-cache
-      #   with:
-      #     path: |
-      #       ~/.android/avd/*
-      #       ~/.android/adb*
-      #     key: avd-${{ matrix.api-level }}
 
       # - name: Restart adb server
       #   run: |
