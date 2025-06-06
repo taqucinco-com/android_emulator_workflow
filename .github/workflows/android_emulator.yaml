@@ -40,6 +40,7 @@ jobs:
         run: |
           echo "$ANDROID_HOME"
           $ANDROID_HOME/emulator/emulator -list-avds
+          $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-accel
 
       # - name: Wait for boot
       #   run: |
