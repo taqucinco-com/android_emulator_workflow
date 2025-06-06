@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-14
     strategy:
       matrix:
         api-level: [35]
@@ -29,31 +29,31 @@ jobs:
       # - name: Gradle cache
       #   uses: gradle/actions/setup-gradle@v3
 
-      # - name: AVD cache
-      #   uses: actions/cache@v4
-      #   id: avd-cache
-      #   with:
-      #     path: |
-      #       ~/.android/avd/*
-      #       ~/.android/adb*
-      #     key: avd-${{ matrix.api-level }}
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
 
-      - name: Create AVD
-        run: |
-          SYSTEM_IMAGES="system-images;android-${{ matrix.api-level }};default;arm64-v8a"
-          echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "$SYSTEM_IMAGES"
-          echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES"
+      # - name: Create AVD
+      #   run: |
+      #     SYSTEM_IMAGES="system-images;android-${{ matrix.api-level }};default;arm64-v8a"
+      #     echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "$SYSTEM_IMAGES"
+      #     echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES"
 
-      - name: Start android emulator
-        # https://developer.android.com/studio/run/emulator-commandline
-        run: |
-          $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
+      # - name: Start android emulator
+      #   # https://developer.android.com/studio/run/emulator-commandline
+      #   run: |
+      #     $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
 
-      - name: Wait for boot
-        run: |
-          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 3; done; input keyevent 82'
-          echo $ANDROID_HOME/emulator/emulator -list-avds
-      #     $ANDROID_HOME/platform-tools/adb devices
+      # - name: Wait for boot
+      #   run: |
+      #     $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 3; done; input keyevent 82'
+      #     echo $ANDROID_HOME/emulator/emulator -list-avds
+      # #     $ANDROID_HOME/platform-tools/adb devices
 
       # - name: Restart adb server
       #   run: |
@@ -69,17 +69,16 @@ jobs:
       #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
       #     arch: x86_64
 
-      # - name: create AVD and generate snapshot for caching
-      #   if: steps.avd-cache.outputs.cache-hit != 'true'
-      #   uses: reactivecircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: ${{ matrix.api-level }}
-      #     force-avd-creation: false
-      #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-      #     disable-animations: false
-      #     script: |
-      #       echo "Generated AVD snapshot for caching."
-      #       abd devices
+      - name: create AVD and generate snapshot for caching
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: "default"
+          arch: "arm64-v8a"
+          emulator-options: -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
+          script: |
+            echo "Generated AVD snapshot for caching."
+            $ANDROID_HOME/platform-tools/adb devices
 
       # - name: Read Flutter version and channel from .fvmrc
       #   uses: kuhnroyal/flutter-fvm-config-action@v2
