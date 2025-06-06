@@ -39,12 +39,12 @@ jobs:
         # https://developer.android.com/studio/run/emulator-commandline
         run: |
           echo "$ANDROID_HOME"
-          $ANDROID_HOME/emulator/emulator -avd -h
+          $ANDROID_HOME/emulator/emulator -list-avds
 
-      - name: Wait for boot
-        run: |
-          while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
-          echo adb devices
+      # - name: Wait for boot
+      #   run: |
+      #     while [ "`adb shell getprop sys.boot_completed | tr -d '\r'`" != "1" ] ; do sleep 10 && echo "wait for boot..."; done
+      #     echo adb devices
 
       # - name: AVD cache
       #   uses: actions/cache@v4
