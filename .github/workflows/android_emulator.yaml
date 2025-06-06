@@ -78,9 +78,11 @@ jobs:
       - name: create AVD and generate snapshot for caching
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ matrix.api-level }}
-          target: "default"
-          arch: "x86_64"
+          api-level: 34
+          system-image-api-level: 34-ext9
+          # api-level: ${{ matrix.api-level }}
+          # target: "default"
+          # arch: "x86_64"
           # emulator-options: -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
           script: |
             echo "Generated AVD snapshot for caching."
