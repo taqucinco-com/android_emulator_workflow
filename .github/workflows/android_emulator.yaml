@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     strategy:
       matrix:
         api-level: [29]
@@ -31,7 +31,7 @@ jobs:
 
       - name: Create AVD
         run: |
-          SYSTEM_IMAGES="system-images;android-29;default;x86_64"
+          SYSTEM_IMAGES="system-images;android-29;default;armeabi-v7a"
           echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "$SYSTEM_IMAGES"
           echo "no" | $ANDROID_HOME/cmdline-tools/latest/bin/avdmanager --verbose create avd -n pixel_6_pro -k "$SYSTEM_IMAGES"
 
