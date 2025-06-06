@@ -48,12 +48,12 @@ jobs:
         # https://developer.android.com/studio/run/emulator-commandline
         run: |
           $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
-          echo $ANDROID_HOME/emulator/emulator -list-avds
 
-      # - name: Wait for boot
-      #   run: |
+      - name: Wait for boot
+        run: |
+          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 3; done; input keyevent 82'
+          echo $ANDROID_HOME/emulator/emulator -list-avds
       #     $ANDROID_HOME/platform-tools/adb devices
-      #     $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 3; done; input keyevent 82'
 
       # - name: Restart adb server
       #   run: |
