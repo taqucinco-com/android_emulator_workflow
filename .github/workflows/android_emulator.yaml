@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: macOS-12
+    runs-on: macOS-14
     # strategy:
     #   matrix:
     #     api-level: [33]
