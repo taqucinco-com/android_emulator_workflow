@@ -81,7 +81,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: "default"
           arch: "x86_64"
-          emulator-options: -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
+          # emulator-options: -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
           script: |
             echo "Generated AVD snapshot for caching."
             $ANDROID_HOME/platform-tools/adb devices
