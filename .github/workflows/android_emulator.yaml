@@ -39,8 +39,7 @@ jobs:
         # https://developer.android.com/studio/run/emulator-commandline
         run: |
           echo "$ANDROID_HOME"
-          $ANDROID_HOME/emulator/emulator -list-avds
-          $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -no-accel
+          $ANDROID_HOME/emulator/emulator -avd pixel_6_pro -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -qemu2 -accel on -cpu host
 
       # - name: Wait for boot
       #   run: |
