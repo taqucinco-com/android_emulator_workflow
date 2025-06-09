@@ -95,5 +95,5 @@ jobs:
             $ANDROID_HOME/emulator/emulator -list-avds
             flutter emulators
             flutter devices
-            flutter build apk -d emulator-5554 --debug --verbose
+            flutter build apk -d emulator-5554 --debug
             flutter test integration_test/app_test.dart -d emulator-5554
