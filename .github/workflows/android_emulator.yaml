@@ -32,8 +32,8 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # - name: Gradle cache
-      #   uses: gradle/actions/setup-gradle@v3
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
 
       - name: AVD cache
         uses: actions/cache@v4
@@ -68,6 +68,21 @@ jobs:
       #     $ANDROID_HOME/platform-tools/adb start-server
       #     echo "Started adb server"
 
+      - name: Read Flutter version and channel from .fvmrc
+        uses: kuhnroyal/flutter-fvm-config-action@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+
+      - name: Flutter Check
+        run: |
+          flutter doctor -v
+          flutter --version
+          flutter pub get
+          dart pub run build_runner build --delete-conflicting-outputs
+
       - name: create AVD and generate snapshot for caching
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -78,21 +93,8 @@ jobs:
           script: |
             echo "Generated AVD snapshot for caching."
             $ANDROID_HOME/platform-tools/adb devices
-
-      # - name: Read Flutter version and channel from .fvmrc
-      #   uses: kuhnroyal/flutter-fvm-config-action@v2
-      # - uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: ${{ env.FLUTTER_VERSION }}
-      #     channel: ${{ env.FLUTTER_CHANNEL }}
-      #     cache: true
-      #     # actによる仮想環境での実行したい場合は以下の2行をアンコメントすること
-      #     # https://github.com/subosito/flutter-action/discussions/197#discussioncomment-6431235
-      #     architecture: x64
-      # - run: git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
-
-      # # # - run: flutter doctor -v
-      # - run: flutter --version
-
-      # - run: flutter pub get
-      # # - run: flutter devices
+            $ANDROID_HOME/emulator/emulator -list-avds
+            flutter emulators
+            flutter devices
+            flutter build apk -d emulator-5554 --debug --verbose
+            flutter test integration_test/app_test.dart -d emulator-5554
