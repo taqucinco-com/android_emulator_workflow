@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.1.0" type="incidents">
+
+    <incident
+        id="GradleDynamicVersion"
+        severity="warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test:runner:1.2+)">
+        <fix-data coordinate="androidx.test:runner:1.2.+"/>
+        <location
+            file="${:integration_test*projectDir}/build.gradle"
+            line="54"
+            column="13"
+            startOffset="1314"
+            endLine="54"
+            endColumn="40"
+            endOffset="1341"/>
+    </incident>
+
+    <incident
+        id="GradleDynamicVersion"
+        severity="warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test:rules:1.2+)">
+        <fix-data coordinate="androidx.test:rules:1.2.+"/>
+        <location
+            file="${:integration_test*projectDir}/build.gradle"
+            line="55"
+            column="13"
+            startOffset="1354"
+            endLine="55"
+            endColumn="39"
+            endOffset="1380"/>
+    </incident>
+
+    <incident
+        id="GradleDynamicVersion"
+        severity="warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test.espresso:espresso-core:3.2+)">
+        <fix-data coordinate="androidx.test.espresso:espresso-core:3.2.+"/>
+        <location
+            file="${:integration_test*projectDir}/build.gradle"
+            line="56"
+            column="13"
+            startOffset="1393"
+            endLine="56"
+            endColumn="56"
+            endOffset="1436"/>
+    </incident>
+
+    <incident
+        id="AndroidGradlePluginVersion"
+        severity="warning"
+        message="A newer version of com.android.tools.build:gradle than 8.1.0 is available: 8.10.1. (There is also a newer version of 8.1.𝑥 available, if upgrading to 8.10.1 is difficult: 8.1.4)">
+        <fix-alternatives>
+            <fix-replace
+                description="Change to 8.10.1"
+                family="Update versions"
+                oldString="8.1.0"
+                replacement="8.10.1"/>
+            <fix-replace
+                description="Change to 8.1.4"
+                family="Update versions"
+                robot="true"
+                independent="true"
+                oldString="8.1.0"
+                replacement="8.1.4"/>
+        </fix-alternatives>
+        <location
+            file="${:integration_test*projectDir}/build.gradle"
+            line="15"
+            column="9"
+            startOffset="341"
+            endLine="15"
+            endColumn="57"
+            endOffset="389"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of org.mockito:mockito-inline than 5.1.0 is available: 5.2.0">
+        <fix-replace
+            description="Change to 5.2.0"
+            family="Update versions"
+            oldString="5.1.0"
+            replacement="5.2.0"/>
+        <location
+            file="${:integration_test*projectDir}/build.gradle"
+            line="52"
+            column="28"
+            startOffset="1266"
+            endLine="52"
+            endColumn="62"
+            endOffset="1300"/>
+    </incident>
+
+</incidents>

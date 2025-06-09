@@ -1,0 +1,54 @@
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/build.gradle:15: Warning: A newer version of com.android.tools.build:gradle than 8.1.0 is available: 8.10.1. (There is also a newer version of 8.1.𝑥 available, if upgrading to 8.10.1 is difficult: 8.1.4) [AndroidGradlePluginVersion]
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "AndroidGradlePluginVersion":
+   This detector looks for usage of the Android Gradle Plugin where the
+   version you are using is not the current stable release. Using older
+   versions is fine, and there are cases where you deliberately want to stick
+   with an older version. However, you may simply not be aware that a more
+   recent version is available, and that is what this lint check helps find.
+
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/build.gradle:52: Warning: A newer version of org.mockito:mockito-inline than 5.1.0 is available: 5.2.0 [GradleDependency]
+        testImplementation 'org.mockito:mockito-inline:5.1.0'
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/build.gradle:54: Warning: Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test:runner:1.2+) [GradleDynamicVersion]
+        api 'androidx.test:runner:1.2+'
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/build.gradle:55: Warning: Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test:rules:1.2+) [GradleDynamicVersion]
+        api 'androidx.test:rules:1.2+'
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/build.gradle:56: Warning: Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (androidx.test.espresso:espresso-core:3.2+) [GradleDynamicVersion]
+        api 'androidx.test.espresso:espresso-core:3.2+'
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDynamicVersion":
+   Using + in dependencies lets you automatically pick up the latest available
+   version rather than a specific, named version. However, this is not
+   recommended; your builds are not repeatable; you may have tested with a
+   slightly different version than what the build server used. (Using a
+   dynamic version as the major version number is more problematic than using
+   it in the minor version position.)
+
+/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android/src/main/java/dev/flutter/plugins/integration_test/FlutterDeviceScreenshot.java:46: Warning: Unnecessary; SDK_INT is always >= 19 [ObsoleteSdkInt]
+@TargetApi(19)
+~~~~~~~~~~~~~~
+
+   Explanation for issues of type "ObsoleteSdkInt":
+   This check flags version checks that are not necessary, because the
+   minSdkVersion (or surrounding known API level) is already at least as high
+   as the version checked for.
+
+   Similarly, it also looks for resources in -vNN folders, such as values-v14
+   where the version qualifier is less than or equal to the minSdkVersion,
+   where the contents should be merged into the best folder.
+
+0 errors, 6 warnings

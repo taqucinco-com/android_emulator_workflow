@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dev.flutter.plugins.integration_test.FlutterDeviceScreenshotTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2025-06-09T07:54:49" hostname="takuyasudonoMacBook-Pro.local" time="1.605">
+  <properties/>
+  <testcase name="getFlutterView_returnsFlutterViewForFlutterActivity" classname="dev.flutter.plugins.integration_test.FlutterDeviceScreenshotTest" time="1.513"/>
+  <testcase name="getFlutterView_returnsFlutterViewForFlutterFragmentActivity" classname="dev.flutter.plugins.integration_test.FlutterDeviceScreenshotTest" time="0.091"/>
+  <testcase name="getFlutterView_returnsNullForNonFlutterActivity" classname="dev.flutter.plugins.integration_test.FlutterDeviceScreenshotTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

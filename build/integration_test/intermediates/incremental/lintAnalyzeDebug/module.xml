@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="/Users/takuya.sudo/fvm/versions/stable/packages/integration_test/android"
+    name=":integration_test"
+    type="LIBRARY"
+    maven="dev.flutter.plugins.integration_test:integration_test:"
+    agpVersion="8.1.0"
+    buildFolder="/Users/takuya.sudo/Documents/workspace/flutter/android_emulator_workflow/build/integration_test"
+    bootClassPath="/Users/takuya.sudo/Library/Android/sdk/platforms/android-34/android.jar:/Users/takuya.sudo/Library/Android/sdk/build-tools/33.0.1/core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

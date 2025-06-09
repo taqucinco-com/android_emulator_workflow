@@ -82,6 +82,12 @@ jobs:
           flutter --version
           flutter pub get
 
+      - name: Build with Gradle
+        run: |
+          pushd android 
+          ./gradlew build
+          popd
+
       - name: create AVD and generate snapshot for caching
         uses: reactivecircus/android-emulator-runner@v2
         with:

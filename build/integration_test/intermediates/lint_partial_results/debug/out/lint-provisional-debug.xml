@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.1.0" type="conditional_incidents">
+
+    <incident
+        id="ObsoleteSdkInt"
+        severity="warning"
+        message="Unnecessary; SDK_INT is always >= 19">
+        <fix-replace
+            description="Delete @TargetApi"
+            replacement="">
+            <range
+                file="${:integration_test*debug*sourceProvider*0*javaDir*0}/dev/flutter/plugins/integration_test/FlutterDeviceScreenshot.java"
+                startOffset="1745"
+                endOffset="1759"/>
+        </fix-replace>
+        <location
+            file="${:integration_test*debug*sourceProvider*0*javaDir*0}/dev/flutter/plugins/integration_test/FlutterDeviceScreenshot.java"
+            line="46"
+            column="1"
+            startOffset="1745"
+            endLine="46"
+            endColumn="15"
+            endOffset="1759"/>
+        <map>
+            <condition minGE="fffffffffffc0000"/>
+        </map>
+    </incident>
+
+</incidents>
