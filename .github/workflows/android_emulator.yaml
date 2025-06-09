@@ -84,6 +84,17 @@ jobs:
           flutter --version
           flutter pub get
 
+      - name: Run Flutter tests
+        run: |
+          flutter --version
+          flutter clean
+          flutter pub get
+        env:
+          FLUTTER_ROOT: /opt/hostedtoolcache/flutter
+          ANDROID_HOME: ${{ secrets.ANDROID_HOME }}
+          JAVA_HOME: ${{ env.JAVA_HOME_17_X64 }}
+          PATH: ${{ env.PATH }}:${{ env.FLUTTER_ROOT }}/bin:${{ env.FLUTTER_ROOT }}/bin/cache/dart-sdk/bin:${{ env.ANDROID_HOME }}/platform-tools:${{ env.ANDROID_HOME }}/tools:${{ env.ANDROID_HOME }}/cmdline-tools/latest/bin:${{ env.JAVA_HOME }}/bin
+
       # - name: Build with Gradle
       #   run: |
       #     pushd android
