@@ -59,21 +59,14 @@ jobs:
       #   run: |
       #     $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 3; done; input keyevent 82'
       #     echo $ANDROID_HOME/emulator/emulator -list-avds
-      # #     $ANDROID_HOME/platform-tools/adb devices
+      #     $ANDROID_HOME/platform-tools/adb devices
 
       # - name: Restart adb server
       #   run: |
-      #     adb kill-server
+      #     $ANDROID_HOME/platform-tools/adb kill-server
       #     echo "Killed adb server"
-      #     adb start-server
+      #     $ANDROID_HOME/platform-tools/adb start-server
       #     echo "Started adb server"
-
-      # - name: Run connected tests
-      #   uses: ReactiveCircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: ${{ matrix.api-level }}
-      #     emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
-      #     arch: x86_64
 
       - name: create AVD and generate snapshot for caching
         uses: reactivecircus/android-emulator-runner@v2
@@ -81,7 +74,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           target: "default"
           arch: "x86_64"
-          # emulator-options: -verbose -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -accel off -no-snapshot-load -no-snapshot-save
+          heap-size: "2048M"
           script: |
             echo "Generated AVD snapshot for caching."
             $ANDROID_HOME/platform-tools/adb devices
