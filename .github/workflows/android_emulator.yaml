@@ -81,7 +81,6 @@ jobs:
           flutter doctor -v
           flutter --version
           flutter pub get
-          dart pub run build_runner build --delete-conflicting-outputs
 
       - name: create AVD and generate snapshot for caching
         uses: reactivecircus/android-emulator-runner@v2
