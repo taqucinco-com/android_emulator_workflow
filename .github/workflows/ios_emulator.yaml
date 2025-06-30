@@ -36,10 +36,9 @@ jobs:
           which ruby
           which pod
 
-      - name: Install Ruby
-        run: |
-          eval "$(rbenv init -)"
-          rbenv install -s `cat .ruby-version`
+      # - name: Install Ruby
+      #   run: |
+      #     rbenv install -s `cat .ruby-version`
 
       - name: Fix Ruby Version
         run: |
