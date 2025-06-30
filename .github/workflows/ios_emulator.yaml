@@ -30,8 +30,8 @@ jobs:
           gem install cocoapods -v 1.16.2
           pod --version
 
-      # - name: Select Xcode version
-      #   run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
+      - name: Select Xcode version
+        run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
 
       # - name: Info Simulator Device Types
       #   run: xcrun simctl list devicetypes
@@ -42,36 +42,36 @@ jobs:
       # - name: Info Simulator Lists
       #   run: xcrun simctl list
 
-      # - name: Boot iOS Simulator
-      #   run: |
-      #     xcrun simctl create "iPhone-16-18.0" "iPhone 16" "com.apple.CoreSimulator.SimRuntime.iOS-18-0"
-      #     xcrun simctl boot "iPhone-16-18.0"
-      #     xcrun simctl bootstatus "iPhone-16-18.0"
+      - name: Boot iOS Simulator
+        run: |
+          xcrun simctl create "iPhone-16-18.0" "iPhone 16" "com.apple.CoreSimulator.SimRuntime.iOS-18-0"
+          xcrun simctl boot "iPhone-16-18.0"
+          xcrun simctl bootstatus "iPhone-16-18.0"
 
-      # - name: Read Flutter version and channel from .fvmrc
-      #   uses: kuhnroyal/flutter-fvm-config-action@v3
-      # - name: Set up Flutter
-      #   uses: subosito/flutter-action@v2
-      #   id: flutter-action
-      #   with:
-      #     flutter-version: ${{ env.FLUTTER_VERSION }}
-      #     channel: ${{ env.FLUTTER_CHANNEL }}
-      #     cache: true
+      - name: Read Flutter version and channel from .fvmrc
+        uses: kuhnroyal/flutter-fvm-config-action@v3
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        id: flutter-action
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
       # actによる仮想環境での実行したい場合は以下の2行をアンコメントすること
       # https://github.com/subosito/flutter-action/discussions/197#discussioncomment-6431235
       #     architecture: x64
       # - run: git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
 
-      # - name: Run Flutter Setup
-      #   run: |
-      #     flutter clean
-      #     flutter pub get
-      #   env:
-      #     FLUTTER_ROOT: /opt/hostedtoolcache/flutter
+      - name: Run Flutter Setup
+        run: |
+          flutter clean
+          flutter pub get
+        env:
+          FLUTTER_ROOT: /opt/hostedtoolcache/flutter
 
-      # - name: Device check
-      #   run: |
-      #     flutter emulators
-      #     flutter emulators --launch apple_ios_simulator
-      #     flutter devices
-      #     flutter test integration_test/counter_test.dart -d 'iPhone-16-18.0' --verbose
+      - name: Device check
+        run: |
+          flutter emulators
+          flutter emulators --launch apple_ios_simulator
+          flutter devices
+          flutter test integration_test/counter_test.dart -d 'iPhone-16-18.0' --verbose
