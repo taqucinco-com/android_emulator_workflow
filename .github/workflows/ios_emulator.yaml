@@ -29,18 +29,14 @@ jobs:
       - name: Install rbenv
         run: brew install rbenv
 
-      - name: Fix Ruby Version
-        run: |
-          which ruby
-          ruby --version
-
       - name: Install Ruby
         run: |
           eval "$(rbenv init -)"
-          rbenv install -s `cat .ruby-version` # or specify the version you want
+          rbenv install -s `cat .ruby-version`
 
-      - name: Fix Ruby Version2
+      - name: Fix Ruby Version
         run: |
+          # .ruby-versionに記載のバージョンをインストール
           which ruby
           ruby --version
 
