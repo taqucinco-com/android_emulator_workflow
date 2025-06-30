@@ -20,31 +20,15 @@ jobs:
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
 
-      - name: Check Ruby
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4.1"
+
+      - name: Install CocoaPods
         run: |
-          which ruby
-          which pod
-
-      - name: Install rbenv
-        run: brew install rbenv
-
-      - name: Check Ruby
-        run: |
-          echo "$SHELL"
-          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-          echo 'eval "$(rbenv init - zsh)"' >> ~/.bash_profile
-          source ~/.bash_profile
-          rbenv init
-          which ruby
-
-      # - name: Install Ruby
-      #   run: |
-      #     rbenv install -s `cat .ruby-version`
-
-      - name: Fix Ruby Version
-        run: |
-          ruby --version
-          which ruby
+          gem install cocoapods -v 1.16.2
+          pod --version
 
       # - name: Select Xcode version
       #   run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
