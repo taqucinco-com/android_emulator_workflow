@@ -47,9 +47,5 @@ jobs:
         env:
           FLUTTER_ROOT: /opt/hostedtoolcache/flutter
 
-      - name: Build Runner
-        if: ${{ !cancelled() }}
-        run: dart pub run build_runner build --delete-conflicting-outputs
-
       - name: Device checkout
         run: flutter devices
