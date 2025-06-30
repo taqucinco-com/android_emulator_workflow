@@ -30,7 +30,17 @@ jobs:
 
       - name: Fix Ruby Version
         run: |
+          # rbenvの初期化
+          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $GITHUB_ENV
+          echo 'eval "$(rbenv init -)"' >> $GITHUB_ENV
+          source $GITHUB_ENV
+
+          # Rubyのバージョン確認
           which ruby
+          ruby --version
+
+          # 必要に応じて特定のバージョンをインストール
+          rbenv install -s
           rbenv rehash
           ruby --version
 
