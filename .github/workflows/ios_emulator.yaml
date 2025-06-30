@@ -26,6 +26,11 @@ jobs:
       - name: Info Simulator Lists
         run: xcrun simctl list
 
+      - name: Boot iOS Simulator
+        run: |
+          xcrun simctl boot "iPhone 14" || true
+          xcrun simctl bootstatus "iPhone 14"
+
       - name: Read Flutter version and channel from .fvmrc
         uses: kuhnroyal/flutter-fvm-config-action@v3
       - name: Set up Flutter
@@ -52,4 +57,7 @@ jobs:
           flutter emulators
           flutter emulators --launch apple_ios_simulator
           flutter devices
-          flutter test integration_test/counter_test.dart -d 'iPhone SE (3rd generation)' --verbose
+          flutter test integration_test/counter_test.dart -d 'iPhone 14' --verbose
+
+      # - name: Unit Test
+      # run: xcodebuild test -workspace Runner.xcworkspace -scheme Runner-UnitTests -configuration Debug -destination "platform=iOS Simulator,name=iPhone 14,OS=16.2"
