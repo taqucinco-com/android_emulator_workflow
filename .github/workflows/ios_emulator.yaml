@@ -17,14 +17,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Info Show Xcode list
-        run: ls /Applications | grep 'Xcode'
+      # - name: Info Show Xcode list
+      #   run: ls /Applications | grep 'Xcode'
 
       - name: Select Xcode version
         run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
 
       - name: Info Simulator Lists
-        run: xcrun simctl list
+        run: |
+          xcrun simctl list
+          xcrun simctl list devicetypes
+          xcrun simctl list runtimes
 
       - name: Boot iOS Simulator
         run: |
