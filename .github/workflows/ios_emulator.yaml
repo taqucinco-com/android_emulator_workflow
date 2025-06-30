@@ -23,18 +23,21 @@ jobs:
       - name: Select Xcode version
         run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
 
+      - name: Info Simulator Device Types
+        run: xcrun simctl list devicetypes
+
+      - name: Info Simulator Runtimes
+        run: xcrun simctl list runtimes
+
       - name: Info Simulator Lists
-        run: |
-          xcrun simctl list
-          xcrun simctl list devicetypes
-          xcrun simctl list runtimes
+        run: xcrun simctl list
 
       - name: Boot iOS Simulator
         run: |
           # 新しいシミュレータを作成
-          xcrun simctl create "iPhone-14-18.0" "iPhone 14" "iOS 18.0"
-          xcrun simctl boot "iPhone-14-18.0"
-          xcrun simctl bootstatus "iPhone-14-18.0"
+          xcrun simctl create "iPhone-16-18.0" "iPhone 16" "com.apple.CoreSimulator.SimRuntime.iOS-18-0"
+          xcrun simctl boot "iPhone-16-18.0"
+          xcrun simctl bootstatus "iPhone-16-18.0"
 
       - name: Read Flutter version and channel from .fvmrc
         uses: kuhnroyal/flutter-fvm-config-action@v3
@@ -62,7 +65,7 @@ jobs:
           flutter emulators
           flutter emulators --launch apple_ios_simulator
           flutter devices
-          flutter test integration_test/counter_test.dart -d 'iPhone 14' --verbose
+          flutter test integration_test/counter_test.dart -d 'iPhone-16-18.0' --verbose
 
       # - name: Unit Test
       # run: xcodebuild test -workspace Runner.xcworkspace -scheme Runner-UnitTests -configuration Debug -destination "platform=iOS Simulator,name=iPhone 14,OS=16.2"
