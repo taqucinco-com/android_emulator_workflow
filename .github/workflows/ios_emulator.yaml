@@ -16,7 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: masa-iwasaki/setup-rbenv@v1
 
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
