@@ -16,6 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: masa-iwasaki/setup-rbenv@v1
 
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
@@ -30,18 +31,17 @@ jobs:
 
       - name: Fix Ruby Version
         run: |
-          # rbenvの初期化
-          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> $GITHUB_ENV
-          echo 'eval "$(rbenv init -)"' >> $GITHUB_ENV
-          source $GITHUB_ENV
-
-          # Rubyのバージョン確認
           which ruby
           ruby --version
 
-          # 必要に応じて特定のバージョンをインストール
-          rbenv install -s
-          rbenv rehash
+      - name: Install Ruby
+        run: |
+          eval "$(rbenv init -)"
+          rbenv install -s `cat .ruby-version` # or specify the version you want
+
+      - name: Fix Ruby Version2
+        run: |
+          which ruby
           ruby --version
 
       # - name: Select Xcode version
