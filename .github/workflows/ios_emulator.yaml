@@ -31,10 +31,10 @@ jobs:
       - name: Check Ruby
         run: |
           echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-          echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+          echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
           source ~/.zshrc
+          rbenv init
           which ruby
-          which pod
 
       # - name: Install Ruby
       #   run: |
@@ -43,6 +43,7 @@ jobs:
       - name: Fix Ruby Version
         run: |
           ruby --version
+          which ruby
 
       # - name: Select Xcode version
       #   run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
