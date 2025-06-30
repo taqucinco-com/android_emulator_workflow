@@ -10,7 +10,7 @@ env:
 
 jobs:
   unit_test:
-    runs-on: macos-14
+    runs-on: macos-15
 
     name: Unit Test
 
@@ -21,10 +21,7 @@ jobs:
         run: ls /Applications | grep 'Xcode'
 
       - name: Select Xcode version
-        run: sudo xcode-select -s '/Applications/Xcode_15.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
 
       - name: Info Simulator Lists
         run: xcrun simctl list
-
-      - name: Info Check Available destination
-        run: xcodebuild build -scheme Runner-UnitTests -showdestinations
