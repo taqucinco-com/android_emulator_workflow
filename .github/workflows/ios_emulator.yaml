@@ -21,7 +21,35 @@ jobs:
         run: ls /Applications | grep 'Xcode'
 
       - name: Select Xcode version
-        run: sudo xcode-select -s '/Applications/Xcode_16.0.app/Contents/Developer'
+        run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
 
       - name: Info Simulator Lists
         run: xcrun simctl list
+
+      - name: Read Flutter version and channel from .fvmrc
+        uses: kuhnroyal/flutter-fvm-config-action@v3
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        id: flutter-action
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ env.FLUTTER_CHANNEL }}
+          cache: true
+          # actによる仮想環境での実行したい場合は以下の2行をアンコメントすること
+          # https://github.com/subosito/flutter-action/discussions/197#discussioncomment-6431235
+      #     architecture: x64
+      # - run: git config --global --add safe.directory /opt/hostedtoolcache/flutter/${{ steps.flutter-action.outputs.CHANNEL }}-${{ steps.flutter-action.outputs.VERSION }}-${{ steps.flutter-action.outputs.ARCHITECTURE }}
+
+      - name: Run Flutter Setup
+        run: |
+          flutter clean
+          flutter pub get
+        env:
+          FLUTTER_ROOT: /opt/hostedtoolcache/flutter
+
+      - name: Build Runner
+        if: ${{ !cancelled() }}
+        run: dart pub run build_runner build --delete-conflicting-outputs
+
+      - name: Device checkout
+        run: flutter devices
