@@ -30,6 +30,7 @@ jobs:
         run: |
           gem install cocoapods -v 1.16.2
           pod --version
+          ruby --version
 
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
