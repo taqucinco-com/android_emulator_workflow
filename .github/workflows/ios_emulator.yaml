@@ -48,4 +48,6 @@ jobs:
           FLUTTER_ROOT: /opt/hostedtoolcache/flutter
 
       - name: Device checkout
-        run: flutter devices
+        run: |
+          flutter emulators
+          flutter devices
