@@ -52,4 +52,4 @@ jobs:
           flutter emulators
           flutter emulators --launch apple_ios_simulator
           flutter devices
-          flutter test integration_test/counter_test.dart -d apple_ios_simulator --verbose
+          flutter test integration_test/counter_test.dart -d 'iPhone SE (3rd generation)' --verbose
