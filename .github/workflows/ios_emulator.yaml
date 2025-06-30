@@ -20,22 +20,17 @@ jobs:
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
 
-      - name: Check Ruby
-        run: |
-          which ruby
-          which pod
-
-      - name: Install rbenv
-        run: brew install rbenv
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2.2"
 
       - name: Check Ruby
         run: |
           echo "$SHELL"
-          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
-          echo 'eval "$(rbenv init - zsh)"' >> ~/.zshrc
-          source ~/.zshrc
-          rbenv init
           which ruby
+          which pod
+          ruby --version
 
       # - name: Install Ruby
       #   run: |
@@ -43,7 +38,7 @@ jobs:
 
       - name: Fix Ruby Version
         run: |
-          ruby --version
+
           which ruby
 
       # - name: Select Xcode version
