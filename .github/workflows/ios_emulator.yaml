@@ -31,8 +31,10 @@ jobs:
 
       - name: Boot iOS Simulator
         run: |
-          xcrun simctl boot "iPhone 14"
-          xcrun simctl bootstatus "iPhone 14"
+          # 新しいシミュレータを作成
+          xcrun simctl create "iPhone-14-18.0" "iPhone 14" "iOS 18.0"
+          xcrun simctl boot "iPhone-14-18.0"
+          xcrun simctl bootstatus "iPhone-14-18.0"
 
       - name: Read Flutter version and channel from .fvmrc
         uses: kuhnroyal/flutter-fvm-config-action@v3
