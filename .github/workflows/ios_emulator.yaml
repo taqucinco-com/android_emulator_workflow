@@ -20,13 +20,18 @@ jobs:
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
 
-      - name: Ruby and CocoaPods
+      - name: Check Ruby
         run: |
           which ruby
           which pod
 
       - name: Install rbenv
         run: brew install rbenv
+
+      - name: Check Ruby
+        run: |
+          which ruby
+          which pod
 
       - name: Install Ruby
         run: |
@@ -35,8 +40,6 @@ jobs:
 
       - name: Fix Ruby Version
         run: |
-          # .ruby-versionに記載のバージョンをインストール
-          which ruby
           ruby --version
 
       # - name: Select Xcode version
