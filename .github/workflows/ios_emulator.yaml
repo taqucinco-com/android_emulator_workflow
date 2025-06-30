@@ -30,6 +30,7 @@ jobs:
 
       - name: Fix Ruby Version
         run: |
+          which ruby
           rbenv rehash
           ruby --version
 
