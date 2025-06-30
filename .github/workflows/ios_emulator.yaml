@@ -17,18 +17,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - name: Info Show Xcode list
-      #   run: ls /Applications | grep 'Xcode'
+      - name: Read .ruby-version
+        id: ruby-version
+        run: echo "ruby_version=$(cat .ruby-version | tr -d '\n')" >> $GITHUB_OUTPUT
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4.1"
+          ruby-version: ${{ steps.ruby-version.outputs.ruby_version }}
 
       - name: Install CocoaPods
         run: |
           gem install cocoapods -v 1.16.2
           pod --version
+
+      # - name: Info Show Xcode list
+      #   run: ls /Applications | grep 'Xcode'
 
       - name: Select Xcode version
         run: sudo xcode-select -s '/Applications/Xcode_16.4.app/Contents/Developer'
