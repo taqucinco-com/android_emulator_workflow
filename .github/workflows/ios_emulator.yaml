@@ -30,6 +30,9 @@ jobs:
 
       - name: Check Ruby
         run: |
+          echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+          echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+          source ~/.zshrc
           which ruby
           which pod
 
