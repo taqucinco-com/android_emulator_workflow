@@ -47,7 +47,9 @@ jobs:
         env:
           FLUTTER_ROOT: /opt/hostedtoolcache/flutter
 
-      - name: Device checkout
+      - name: Device check
         run: |
           flutter emulators
+          flutter emulators --launch apple_ios_simulator
           flutter devices
+          flutter test integration_test/counter_test.dart -d apple_ios_simulator --verbose
