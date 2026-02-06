@@ -43,11 +43,23 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ steps.ruby-version.outputs.ruby_version }}
+          bundler-cache: true
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          # ~/Library/Caches/CocoaPods だけでなく ios/Pods もキャッシュして pod install を高速化
+          path: |
+            ~/Library/Caches/CocoaPods
+            ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('ios/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
 
       - name: Install CocoaPods
         run: |
           gem install cocoapods -v 1.16.2
-          pod --version
+          cd ios && pod install --repo-update
 
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
@@ -72,6 +84,7 @@ jobs:
 
       - name: Read Flutter version and channel from .fvmrc
         uses: kuhnroyal/flutter-fvm-config-action@v3
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         id: flutter-action
