@@ -104,13 +104,8 @@ jobs:
           heap-size: "2048M"
           script: |
             echo "Generated AVD snapshot for caching."
-            $ANDROID_HOME/platform-tools/adb devices
-            $ANDROID_HOME/emulator/emulator -list-avds
-            flutter emulators
-            flutter devices
-            flutter test integration_test/counter_test.dart -d emulator-5554 --verbose
 
-      - name: create AVD and generate snapshot for caching
+      - name: Run test
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
