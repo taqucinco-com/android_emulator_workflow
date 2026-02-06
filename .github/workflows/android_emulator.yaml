@@ -46,6 +46,7 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
+            /usr/local/lib/android/sdk/system-images/android-${{ matrix.api-level }}
           key: avd-${{ matrix.api-level }}
 
       # - name: Create AVD
@@ -99,6 +100,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
           target: "default"
           arch: "x86_64"
           heap-size: "2048M"
@@ -109,6 +111,7 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          force-avd-creation: false
           target: "default"
           arch: "x86_64"
           heap-size: "2048M"
