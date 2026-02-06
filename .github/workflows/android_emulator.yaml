@@ -23,6 +23,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
+          # cache: 'gradle' gradle/actions/setup-gradle 利用時は消すこと
 
       - name: Enable KVM
         run: |
@@ -78,6 +79,7 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
+          cache-key: "flutter-:os:-:channel:-:version:-:arch:-:hash:"
 
       - name: Run Flutter tests
         run: |
@@ -93,6 +95,7 @@ jobs:
       #     popd
 
       - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
