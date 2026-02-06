@@ -79,6 +79,7 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: ${{ env.FLUTTER_CHANNEL }}
           cache: true
+          cache-key: "flutter-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('**/pubspec.lock') }}"
       # actによる仮想環境での実行したい場合は以下の2行をアンコメントすること
       # https://github.com/subosito/flutter-action/discussions/197#discussioncomment-6431235
       #     architecture: x64
@@ -96,4 +97,4 @@ jobs:
           flutter emulators
           flutter emulators --launch apple_ios_simulator
           flutter devices
-          flutter test integration_test/counter_test.dart -d 'iPhone-16-18.0' --verbose
+          flutter test integration_test/counter_test.dart -d 'iPhone-16-18.5' --verbose
