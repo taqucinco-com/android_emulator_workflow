@@ -1,10 +1,12 @@
 # NOTE: このworkflowは未検証です。CI/CD運用のためのテンプレートとして作成しました。
-name: release test
+name: ios simulator
 
 on:
-  push:
-    branches:
-      - hoge
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+
 env:
   KEYCHAIN_PASSWORD: "P@ssw0rd"
 

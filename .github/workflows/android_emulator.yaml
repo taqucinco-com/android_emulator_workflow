@@ -3,9 +3,9 @@ name: flutter android emulator
 # $ act push --container-architecture=linux/amd64 -W .github/workflows/flutter_analyzer.yaml
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
