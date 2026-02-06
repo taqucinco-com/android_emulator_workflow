@@ -110,4 +110,7 @@ jobs:
           flutter emulators
           flutter emulators --launch apple_ios_simulator
           flutter devices
+
+      - name: Flutter test
+        run: |
           flutter test integration_test/counter_test.dart -d 'iPhone-16-18.5' --verbose
