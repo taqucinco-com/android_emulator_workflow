@@ -19,6 +19,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.os == 'macOS' && '~/Library/Caches/CocoaPods' || '~/.cache/CocoaPods' }}
+          key: ${{ runner.os }}-cocoapods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cocoapods-
+
+      - name: Cache Pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-cache-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-cache-
+
       - name: Read .ruby-version
         id: ruby-version
         run: echo "ruby_version=$(cat .ruby-version | tr -d '\n')" >> $GITHUB_OUTPUT
@@ -32,7 +48,6 @@ jobs:
         run: |
           gem install cocoapods -v 1.16.2
           pod --version
-          ruby --version
 
       # - name: Info Show Xcode list
       #   run: ls /Applications | grep 'Xcode'
@@ -51,9 +66,9 @@ jobs:
 
       - name: Boot iOS Simulator
         run: |
-          xcrun simctl create "iPhone-16-18.0" "iPhone 16" "com.apple.CoreSimulator.SimRuntime.iOS-18-0"
-          xcrun simctl boot "iPhone-16-18.0"
-          xcrun simctl bootstatus "iPhone-16-18.0"
+          xcrun simctl create "iPhone-16-18.5" "iPhone 16" "com.apple.CoreSimulator.SimRuntime.iOS-18-5"
+          xcrun simctl boot "iPhone-16-18.5"
+          xcrun simctl bootstatus "iPhone-16-18.5"
 
       - name: Read Flutter version and channel from .fvmrc
         uses: kuhnroyal/flutter-fvm-config-action@v3
